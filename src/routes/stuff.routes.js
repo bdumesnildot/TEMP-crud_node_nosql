@@ -1,19 +1,19 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const stuff = require("../controllers/stuff.controllers");
+const stuffCtrl = require('../controllers/stuff.controllers');
 
 const timeLog = (req, res, next) => {
-  console.log("use /api/stuff/ at time: ", Date.now());
+  console.log('use /api/stuff/ at time: ', Date.now());
   next();
 };
 router.use(timeLog);
 
-router.get("/", stuff.getStuff);
-router.post("/", stuff.postStuff);
+router.get('/', stuffCtrl.getStuff);
+router.post('/', stuffCtrl.postStuff);
 
-router.get("/:id", stuff.getStuffById);
-router.put("/:id", stuff.updateStuffById);
-router.delete("/:id", stuff.deleteStuffById);
+router.get('/:id', stuffCtrl.getStuffById);
+router.put('/:id', stuffCtrl.updateStuffById);
+router.delete('/:id', stuffCtrl.deleteStuffById);
 
 module.exports = router;

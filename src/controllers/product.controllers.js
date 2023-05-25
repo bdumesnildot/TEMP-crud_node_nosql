@@ -1,4 +1,4 @@
-const Product = require("../models/product.model");
+const Product = require('../models/product.model');
 
 const getProduct = (req, res, next) => {
   Product.find()
@@ -27,13 +27,13 @@ const postProduct = (req, res, next) => {
 
 const updateProductById = (req, res, next) => {
   Product.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
-    .then(() => res.status(200).json({ message: "Modified!" }))
+    .then(() => res.status(200).json({ message: 'Modified!' }))
     .catch((error) => res.status(400).json({ error }));
 };
 
 const deleteProductById = (req, res, next) => {
   Product.deleteOne({ _id: req.params.id })
-    .then(() => res.status(200).json({ message: "Deleted!" }))
+    .then(() => res.status(200).json({ message: 'Deleted!' }))
     .catch((error) => res.status(400).json({ error }));
 };
 

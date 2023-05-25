@@ -1,4 +1,4 @@
-const Thing = require("../models/thing.model");
+const Thing = require('../models/thing.model');
 
 const getStuff = (req, res, next) => {
   Thing.find()
@@ -19,19 +19,19 @@ const postStuff = (req, res, next) => {
   });
   thing
     .save()
-    .then(() => res.status(201).json({ message: "Objet enregistré !" }))
+    .then(() => res.status(201).json({ message: 'Objet enregistré !' }))
     .catch((error) => res.status(400).json({ error }));
 };
 
 const updateStuffById = (req, res, next) => {
   Thing.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
-    .then(() => res.status(200).json({ message: "Objet modifié !" }))
+    .then(() => res.status(200).json({ message: 'Objet modifié !' }))
     .catch((error) => res.status(400).json({ error }));
 };
 
 const deleteStuffById = (req, res, next) => {
   Thing.deleteOne({ _id: req.params.id })
-    .then(() => res.status(200).json({ message: "Objet supprimé !" }))
+    .then(() => res.status(200).json({ message: 'Objet supprimé !' }))
     .catch((error) => res.status(400).json({ error }));
 };
 
