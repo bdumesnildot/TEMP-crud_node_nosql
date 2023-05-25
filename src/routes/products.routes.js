@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+const authMW = require('../middleware/auth.middleware');
 const productCtrl = require('../controllers/product.controllers');
 
 const timeLog = (req, res, next) => {
@@ -9,11 +10,11 @@ const timeLog = (req, res, next) => {
 };
 router.use(timeLog);
 
-router.get('/', productCtrl.getProduct);
-router.post('/', productCtrl.postProduct);
+router.get('/', authMW.decodeToken, productCtrl.getProduct);
+router.post('/', authMW.decodeToken, productCtrl.postProduct);
 
-router.get('/:id', productCtrl.getProductById);
-router.put('/:id', productCtrl.updateProductById);
-router.delete('/:id', productCtrl.deleteProductById);
+router.get('/:id', authMW.decodeToken, productCtrl.getProductById);
+router.put('/:id', authMW.decodeToken, productCtrl.updateProductById);
+router.delete('/:id', authMW.decodeToken, productCtrl.deleteProductById);
 
 module.exports = router;

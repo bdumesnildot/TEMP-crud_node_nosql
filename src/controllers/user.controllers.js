@@ -1,8 +1,10 @@
+require('dotenv').config();
 const User = require('../models/user.model');
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
+const jwt = require('jsonwebtoken');
 
 const signup = (req, res, next) => {
+  const saltRounds = 10;
   bcrypt
     .hash(req.body.password, saltRounds)
     .then((hash) => {
@@ -19,6 +21,8 @@ const signup = (req, res, next) => {
 };
 
 const login = (req, res, next) => {
+  const AUTH_TOKEN_ENCRYPTOR = process.env.AUTH_TOKEN_ENCRYPTOR;
+
   User.findOne({ email: req.body.email })
     .then((user) => {
       if (!user) {
@@ -36,7 +40,9 @@ const login = (req, res, next) => {
           }
           res.status(200).json({
             userId: user._id,
-            token: 'TOKEN',
+            token: jwt.sign({ userId: user._id }, AUTH_TOKEN_ENCRYPTOR, {
+              expiresIn: '24h',
+            }),
           });
         })
         .catch((error) => res.status(500).json({ error }));

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+const authMW = require('../middleware/auth.middleware');
 const stuffCtrl = require('../controllers/stuff.controllers');
 
 const timeLog = (req, res, next) => {
@@ -9,11 +10,11 @@ const timeLog = (req, res, next) => {
 };
 router.use(timeLog);
 
-router.get('/', stuffCtrl.getStuff);
-router.post('/', stuffCtrl.postStuff);
+router.get('/', authMW.decodeToken, stuffCtrl.getStuff);
+router.post('/', authMW.decodeToken, stuffCtrl.postStuff);
 
-router.get('/:id', stuffCtrl.getStuffById);
-router.put('/:id', stuffCtrl.updateStuffById);
-router.delete('/:id', stuffCtrl.deleteStuffById);
+router.get('/:id', authMW.decodeToken, stuffCtrl.getStuffById);
+router.put('/:id', authMW.decodeToken, stuffCtrl.updateStuffById);
+router.delete('/:id', authMW.decodeToken, stuffCtrl.deleteStuffById);
 
 module.exports = router;
